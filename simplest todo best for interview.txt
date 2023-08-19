@@ -1,0 +1,44 @@
+import "./styles.css";
+import { useState } from "react";
+/*
+  INSTRUCTIONS:
+  Create a "todo"(add cities) app with the following criteria.
+    1. The user can add new cities
+    2. The user can remove existing cities items
+*/
+
+export default function App() {
+  const [todos, setTodos] = useState([]);
+  const [city, setCity] = useState("");
+
+  const addCities = () => {
+    setTodos([...todos, { title: city }]);
+    setCity("");
+  };
+
+  const handleDelete = (i) => {
+    const filterItem = todos.filter((item, index) => index !== i);
+    setTodos(filterItem);
+  };
+
+  return (
+    <div className="App">
+      <input
+        type="text"
+        placeholder="add city.."
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+      />
+      <button onClick={addCities}>Add </button>
+
+      {todos.map((todo, index) => (
+        <>
+          <li key={index}>
+            {" "}
+            {todo.title} <button onClick={() => handleDelete(index)}>X</button>{" "}
+          </li>
+        </>
+      ))}
+    </div>
+  );
+}
