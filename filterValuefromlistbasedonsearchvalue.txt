@@ -1,0 +1,52 @@
+import { useState } from "react";
+import SearchBar from "./SearchBar";
+import ShowUsers from "./ShowUsers";
+import "./styles.css";
+
+export default function App() {
+  const random_users = [
+    {
+      id: 1,
+      first_name: "John"
+    },
+    {
+      id: 2,
+      first_name: "Jane"
+    },
+    {
+      id: 3,
+      first_name: "Michael"
+    },
+    {
+      id: 4,
+      first_name: "Emily"
+    },
+    {
+      id: 5,
+      first_name: "David"
+    }
+  ];
+
+  const [filtered, setFiltered] = useState(random_users);
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    if (searchTerm === "") {
+      setFiltered(random_users);
+    } else {
+      const filteredList = random_users.filter((user) => {
+        // return user.first_name.toLowerCase().includes(searchTerm);
+        return user.first_name.toLowerCase().indexOf(searchTerm) !== -1;
+      });
+      setFiltered(filteredList);
+    }
+  };
+
+  return (
+    <div className="App">
+      <input type="search" onChange={handleSearch} />
+      {filtered &&
+        filtered.map((random) => <li key={random.id}>{random.first_name}</li>)}
+    </div>
+  );
+}
